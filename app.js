@@ -1,4 +1,5 @@
 const express = require('express');
+const {sequelize} = require('./models')
 const cookieParser = require('cookie-parser');
 const app = express();
 const port = 3000;
@@ -17,6 +18,8 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use('/', [postsRouter, commentsRouter, usersRouter, loginRouter]);
 
-app.listen(port, () => {
+app.listen(port, async () => {
   console.log(port, '포트로 서버가 열렸습니다.');
+  await sequelize.authenticate()
+  console.log('db가 인증되었습니다.')
 });
