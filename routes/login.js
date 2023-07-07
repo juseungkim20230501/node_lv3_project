@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const userSchema = require('../schemas/user');
 const jwt = require('jsonwebtoken');
+const { Users } = require('../models');
 
 router.post('/login', async (req, res) => {
   try {
     const { nickname, password } = req.body;
 
-    const user = await userSchema.findOne({ nickname });
+    const user = await Users.findOne({ nickname });
 
     if (!user || user.password !== password) {
       res.status(412).json({

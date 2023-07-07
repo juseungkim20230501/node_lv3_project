@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const userSchema = require('../schemas/user');
+const { Users } = require('../models');
 
 module.exports = async (req, res, next) => {
   const { Authorization } = req.cookies;
@@ -14,7 +14,7 @@ module.exports = async (req, res, next) => {
 
   try {
     const { userId } = jwt.verify(loginToken, 'letsgo-doge-key');
-    const user = await userSchema.findById(userId);
+    const user = await Users.findOne({ userId });
     res.locals.user = user;
     next();
   } catch (error) {
